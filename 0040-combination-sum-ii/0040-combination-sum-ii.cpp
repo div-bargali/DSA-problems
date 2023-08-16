@@ -14,6 +14,8 @@ public:
                 solve(i+1, sub, ans, target - nums[i], nums);
                 sub.pop_back();
             } 
+            // since we have already picked nums[i], picking an element that 
+            // is same as it, would result in the same combination being created again
             while (i+1 < nums.size() && nums[i] == nums[i+1]) i++;
             solve(i+1, sub, ans, target, nums);
         }
