@@ -40,6 +40,23 @@ public:
         // return solve(0, -1, n, nums, dp);
         
         // Approach 2. tabulation
-        return tabulation(n, nums);
+        // return tabulation(n, nums);
+        
+        // Approach 3. Binary Search
+        vector<int> temp;
+        int ans = 1;
+        temp.push_back(nums[0]);
+        for (int i = 1; i < n; i++) {
+            if (temp.back() < nums[i]) {
+                // everytime we add a new element in temp, it's means LIS's length is increasing
+                temp.push_back(nums[i]); ans++;
+            }
+            else {
+                // replace the element with the element which is just greater than nums[i]
+                int index = lower_bound(temp.begin(), temp.end(), nums[i]) - temp.begin();
+                temp[index] = nums[i];
+            }
+        }
+        return ans;
     }
 };
