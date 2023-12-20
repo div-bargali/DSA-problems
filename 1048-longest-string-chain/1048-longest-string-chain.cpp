@@ -14,7 +14,7 @@ public:
                 j++;
             }
         }
-        return (i == n-1 && (j == n || j == n-1));
+        return (i == n-1 && (j == n || j == n-1)); // j will be either n-1 too if last character does not match
     }
     int longestStrChain(vector<string>& words) {
         int n = words.size();
