@@ -15,8 +15,8 @@ public:
                         cnt[i] = cnt[prev]; 
                     }
                     else if (dp[prev] + 1 == dp[i]) {
-                        // since the lenght of LIS is not changing, but we have found another 
-                        // so add the # of LIS until prev-index to the cnt of # of LIS at i
+                        // we have again encountered a new subseq. with maximal length of LIS ending at index i
+                        // so we will increase the count of LIS ending at i
                         cnt[i] += cnt[prev];
                     }
                 }
