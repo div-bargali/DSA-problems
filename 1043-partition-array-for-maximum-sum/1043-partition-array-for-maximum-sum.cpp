@@ -38,7 +38,7 @@ public:
         int n = arr.size();
         // vector<vector<int>> dp(n, vector<int>(n, -1));
         vector<int> dp2(n, -1);
-        // return solve(0, n-1, k, arr, dp); TC -> O(N*N*k)
+        // return solve(0, n-1, k, arr, dp); TC -> O(N*k)
         // we don't need j because j will always be n-1
         return solveOptimized(0, n, k, arr, dp2);
     }
