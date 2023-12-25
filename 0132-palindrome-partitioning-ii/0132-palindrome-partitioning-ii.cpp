@@ -24,7 +24,21 @@ public:
     
     int minCut(string s) {
         int n = s.length();
-        vector<int> dp(n, -1);
-        return solve(0, n, s, dp) - 1; // since we are counting 1 extra partion in the end
+        vector<int> dp(n+1, INT_MAX);
+        // recursion + memo
+        // return solve(0, n, s, dp) - 1; // since we are counting 1 extra partion in the end
+        // tabulation 
+        // base case
+        dp[n] = 0;
+        for (int i = n-1; i >= 0; i--) {
+            int minCuts = INT_MAX;
+            for (int k = n-1; k >= i; k--) {
+                if(isPalindrome(s, i, k)) {
+                    minCuts = min(minCuts, 1 + dp[k+1]);
+                }
+            }
+            dp[i] = minCuts;
+        }
+        return dp[0] - 1;
     }
 };
