@@ -1,5 +1,48 @@
 class Solution {
 public:
+    // TC - O(N+E)
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        int n = wordList.size();
+        queue<string> q;
+        q.push(beginWord);
+        
+        // edge case -> when endWord not in wordList
+        if (find(wordList.begin(), wordList.end(), endWord) == wordList.end())
+            return 0;
+        
+        // maintain a not visited set
+        unordered_set<string> notVis(wordList.begin(), wordList.end());
+        notVis.erase(beginWord); // same as marking the word visted
+        
+        int len = 1;
+         while(!q.empty()){
+            int n = q.size();
+            for(int i = 0; i < n; i++){
+                string cur = q.front(); q.pop();
+                if(cur == endWord){
+                    return len;
+                }
+                string tmp = cur;
+                for(int i = 0; i < cur.length(); i++){
+                    char c = cur[i];
+                    // vary cur's letters one by one
+                    for(int j = 0; j < 26; j++){
+                        cur[i] = 'a' + j;
+                        if(cur == tmp) continue;
+                        if(notVis.find(cur) != notVis.end()){
+                            // cur is not visited
+                            notVis.erase(cur);
+                            q.push(cur);
+                        }
+                    }
+                    cur[i] = c;
+                }
+            }
+            len++;
+        }
+        return 0;
+    }
+    
     bool isTransformable(string &a, string &b) {
         int cnt = 0;
         int n = a.length(), m = b.length();
@@ -11,8 +54,8 @@ public:
         return (cnt == 1);
         
     }
-    
-    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+    // TC - O(N*N) + O(N+E)
+    int ladderLengthUnpotimized(string beginWord, string endWord, vector<string>& wordList) {
         int n = wordList.size();
         vector<vector<int>> adj(n);
         vector<bool> vis(n, false);
@@ -42,10 +85,6 @@ public:
         }
         
         int len = 1; // first transformation already added in queue
-        // edge case - when beginWord in wordList
-        if (find(wordList.begin(), wordList.end(), beginWord) != wordList.end()) 
-            len = 1;
-        
         bool flag = false;
         
         while (!q.empty()) {
@@ -65,8 +104,6 @@ public:
             }
             len++;
         }
-        
-        return flag ? len : 0;
-        
+        return flag ? len : 0;   
     }
 };
