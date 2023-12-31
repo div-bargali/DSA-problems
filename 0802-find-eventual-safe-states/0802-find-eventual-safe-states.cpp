@@ -1,18 +1,16 @@
 class Solution {
 public:
-    void dfs(int u, vector<bool> &vis, vector<bool> &isSafe, vector<int> &ans,
-             vector<vector<int>> &graph) {
+    void dfs(int u, vector<bool> &vis, vector<bool> &isSafe, vector<vector<int>> &graph) {
         vis[u] = true;
         bool flag = true;
         for (auto v: graph[u]) {
             if (!vis[v]) {
-                dfs(v, vis, isSafe, ans, graph);
+                dfs(v, vis, isSafe, graph);
             }
             flag = flag & isSafe[v];
         }
         if (flag == true) {
             isSafe[u] = true;
-            ans.push_back(u);
         }
     }
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
@@ -31,10 +29,12 @@ public:
         }
         for (int i = 0; i < n; i++) {
             if (!vis[i]){
-                dfs(i, vis, isSafe, ans, graph);
+                dfs(i, vis, isSafe, graph);
             }
         }
-        sort(ans.begin(), ans.end());
+        for (int i = 0; i < n; i++) {
+            if (isSafe[i]) ans.push_back(i);
+        }
         return ans;
     }
 };
