@@ -19,6 +19,8 @@ public:
                 int e = top.first;
                 int i = top.second.first;
                 int j = top.second.second;
+                
+                if (i == n-1 && j == m-1) return e;
                 // explore adjacent nodes
                 for (int l = 0; l < 4; l++) {
                     int x = i + dx[l];
@@ -35,6 +37,7 @@ public:
                 }
             }
         }
-        return efforts[n-1][m-1];
+        // unreachable
+        return 0;
     }
 };
