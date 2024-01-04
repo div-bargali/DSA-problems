@@ -36,6 +36,6 @@ public:
         }
         
         if (ways[n-1].first == LLONG_MAX) return 0;
-        return static_cast<int>(ways[n-1].second);
+        return ways[n-1].second;
     }
 };
