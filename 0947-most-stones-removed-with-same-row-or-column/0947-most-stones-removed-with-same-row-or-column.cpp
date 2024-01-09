@@ -50,8 +50,8 @@ public:
                 col.insert({c, i});
             if (row.find(r) == row.end()) // first time this row is found
                 row.insert({r, i});
-            dsu.unionBySize(i, row[r]); 
-            dsu.unionBySize(i, col[c]);
+            dsu.unionBySize(i, row[r]); // connect with all 1's on the same row
+            dsu.unionBySize(i, col[c]); // connect with all 1's on the same col
         }
 
         int components = 0;
