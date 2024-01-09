@@ -40,16 +40,16 @@ public:
     int removeStones(std::vector<std::vector<int>>& stones) {
         int n = stones.size();
         DisjointSet dsu(n);
-        std::unordered_map<int, int> col;
-        std::unordered_map<int, int> row;
+        unordered_map<int, int> col;
+        unordered_map<int, int> row;
 
         for (int i = 0; i < n; ++i) {
             int c = stones[i][0];
             int r = stones[i][1];
-            if (col.find(c) == col.end())
-                col.insert(std::make_pair(c, i));
-            if (row.find(r) == row.end()) 
-                row.insert(std::make_pair(r, i));
+            if (col.find(c) == col.end()) // first time this column is found
+                col.insert({c, i});
+            if (row.find(r) == row.end()) // first time this row is found
+                row.insert({r, i});
             dsu.unionBySize(i, row[r]); 
             dsu.unionBySize(i, col[c]);
         }
