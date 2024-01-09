@@ -15,7 +15,6 @@ public:
             return vertex;
         return parent[vertex] = findUParent(parent[vertex]);
     }
-
     void unionBySize(int u, int v) {
         int ulp_u = findUParent(u);
         int ulp_v = findUParent(v);
@@ -32,6 +31,9 @@ public:
                 size[ulp_u] += size[ulp_v];
             }
         }
+    }
+    int findSize(int i) {
+        return size[i];
     }
 };
 
@@ -54,13 +56,13 @@ public:
             dsu.unionBySize(i, col[c]); // connect with all 1's on the same col
         }
 
-        int components = 0;
+        int ans = 0;
         for (int i = 0; i < n; ++i) {
             if (dsu.findUParent(i) == i) {
-                components++;
+                ans += dsu.findSize(i) - 1;
             }
         }
 
-        return n - components;
+        return ans;
     }
 };
