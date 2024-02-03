@@ -11,7 +11,7 @@
 class Solution {
 public:
     ListNode* reverse(ListNode* head, ListNode* tail) {
-        ListNode* prev = head, *nextNode = head;
+        ListNode* prev = nullptr, *nextNode = head;
         while(head && head != tail) {
             nextNode = head->next;
             head->next = prev;
@@ -20,7 +20,7 @@ public:
         }
         return prev;
     }
-    ListNode* reverseKGroup(ListNode* head, int k) {
+    ListNode* reverseKGroupRecursive(ListNode* head, int k) {
         if (!head) return nullptr;
         int count = 0; 
         ListNode* current = head, *newHead;
@@ -38,5 +38,36 @@ public:
         head->next = reverseKGroup(current, k);
         // Return the new head of the reversed list
         return newHead;
+    }
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if (!head) return head;
+        ListNode* currGrpHead = head, *currGrpTail, *prevGrpTail = nullptr, *nextGrpHead;
+        while(currGrpHead) {
+            currGrpTail = currGrpHead;
+            for (int i = 1; i < k; i++) {
+                if (currGrpTail) currGrpTail = currGrpTail->next;
+            }
+            // if currGrpTail becomes null, means there are less than k elements in group
+            if (currGrpTail == nullptr) {
+                break;
+            }
+            nextGrpHead = currGrpTail->next;
+            // reverse the current group
+            currGrpTail = currGrpHead; // after reverse head will become tail
+            currGrpHead = reverse(currGrpHead, nextGrpHead);
+            if (prevGrpTail == nullptr) {
+                // dealing with the first group, make head point to the group head
+                head = currGrpHead;
+            } else {
+                // connect previous reversed group with new one
+                prevGrpTail->next = currGrpHead;
+            }
+            prevGrpTail = currGrpTail;
+            currGrpHead = nextGrpHead;
+        }
+        if (currGrpHead) {
+            prevGrpTail->next = currGrpHead;
+        }
+        return head;
     }
 };
