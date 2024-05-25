@@ -5,7 +5,10 @@ class Solution {
 public:    
     int hIndex(vector<int>& citations) {
         // Binary Search approach - O(n.logn)
-        return solveBinarySearch(citations);
+        // return solveBinarySearch(citations);
+        
+        // HashMap appoach - O(n) space and O(n) time
+        return solveHashMap(citations);
     }
 private:
     int solveBinarySearch(vector<int>& citations) {
@@ -29,5 +32,27 @@ private:
             }
         }
         return ans;
+    }
+    
+    int solveHashMap(vector<int> &citations) {
+        int n = citations.size();
+        vector<int> mp(n+1, 0);
+        
+        for (int i = 0; i < n; i++) {
+            if (citations[i] >= n) {
+                mp[n]++;
+                // max-value of h-Index can be equal to n only
+            } else {
+                mp[citations[i]]++;
+            }
+        }
+        int valid = 0;
+        for (int i = n; i >= 0; i--) {
+            valid += mp[i];
+            if (valid >= i) {
+                return i;
+            }
+        }
+         return 0;
     }
 };
