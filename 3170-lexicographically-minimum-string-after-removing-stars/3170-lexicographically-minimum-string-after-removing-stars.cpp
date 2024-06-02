@@ -4,7 +4,6 @@ public:
         int n = s.length();
         vector<bool> removed(n, false); // for marking index as removed
         vector<vector<int>> chars(26); // stores index of occurence of chars
-       
         
         for (int i = 0; i < n; i++) {
             if (s[i] == '*') {
