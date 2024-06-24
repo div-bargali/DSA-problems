@@ -15,7 +15,6 @@ public:
             i++;
         }
         for (auto e: nums) {
-            cout << e << " ";
             if (e == 0) return -1;
         }
         return ans;
